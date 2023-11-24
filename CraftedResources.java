@@ -1,2 +1,6 @@
-public abstract class CraftedResources {
+public abstract class CraftedResources extends Resource {
+
+    public CraftedResources(int amount) {
+        super(amount);
+    }
 }
