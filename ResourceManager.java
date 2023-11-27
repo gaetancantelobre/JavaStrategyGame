@@ -72,8 +72,11 @@ public class ResourceManager {
                     getToolsMana().addRemoveValue(r.getValue());
                 case "Wood":
                     getWoodMana().addRemoveValue(r.getValue());
+                default:
+                    return false;
             }
         }
+        return false;
     }
 
     public void addResources(ArrayList<Resource> resList)
