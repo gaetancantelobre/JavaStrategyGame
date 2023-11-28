@@ -11,6 +11,10 @@ public  abstract class Resource {
         amount += value;
     }
 
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
     public String getType() {
         return type;
     }
@@ -19,4 +23,6 @@ public  abstract class Resource {
     {
         return amount;
     }
+
+
 }
