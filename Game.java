@@ -3,13 +3,54 @@ import java.util.HashMap;
 
 public class Game {
     GameGrid grid;
-
+    int dayCounter;
     ResourceManager stash;
+
+    public int getDayCounter() {
+        return dayCounter;
+    }
+
+    public ResourceList getFinal_goal() {
+        return final_goal;
+    }
+
+    void printSUKP()
+    {
+        getGrid().printAndUpdateGrid();
+
+        System.out.print("Current Stash :      " + getStash().getResourceList());
+        System.out.print("Current Production : " + getGrid().getProductionOnGrid(getStash()).toStringSimple());
+        System.out.print("Current UpKeep :     " + getGrid().getUpKeepOnGrid(getStash()).toStringSimple());
+        System.out.println("Total population   : " + getGrid().getNbrOfInhabitants());
+        if(getGrid().getNbrOfInhabitants() > 0)
+        {
+            System.out.print("Unemployment rate  : " + (getGrid().getListOfUnemployed().size()* 100)/ getGrid().getNbrOfInhabitants() + "%\n");
+
+        }
+    }
+
+    public ResourceList getNetGainOnGrid()
+    {
+        ResourceList gain = getGrid().getProductionOnGrid();
+        gain.diffResourceList(getGrid().getUpKeepOnGrid(getStash()));
+        return gain;
+    }
+    ResourceList final_goal = new ResourceList(100,100,100,100,100,100,100,100,100,100);
 
 
     public Game(int size_x, int size_y) {
         this.grid = new GameGrid(size_x,size_y);
         stash = new ResourceManager();
+        dayCounter = 0;
+    }
+
+    public boolean checkEndGame()
+    {
+        return final_goal.getProdList() == stash.getResourceList().getProdList();
+    }
+
+    public void increaseDayCounter() {
+        this.dayCounter++;
     }
 
     public GameGrid getGrid() {
@@ -20,15 +61,16 @@ public class Game {
         return stash;
     }
 
-    public void printResources()
+
+
+    public ArrayList<Habitant> getUnemployed()
     {
-        System.out.println("STASH :");
-        for (HashMap.Entry<String, Resource> entry : stash.getResourceList().getProdList().entrySet()) {
-            String key = entry.getKey(); //get the type of resource
-            int value = entry.getValue().getValue(); //get the number of the value of current resource
-            System.out.print( key + " : " + value + "|");
-        }
-        System.out.print("\n");
+        return getGrid().getListOfUnemployed();
+    }
+
+    public ArrayList<Habitant> getHabitants()
+    {
+        return getGrid().getListOfHabitants();
     }
 
     public Game(GameGrid grid) {

@@ -3,7 +3,7 @@ import java.util.HashMap;
 
 public class ResourceManager {
 
-    ResourceList resourceList = new ResourceList(0,0,0,0,0,0,0,0,0);
+    ResourceList resourceList = new ResourceList(0,0,0,0,0,0,0,0,0,0);
 
 
     public Resource getResource(String resourceType) {
@@ -27,16 +27,21 @@ public class ResourceManager {
         return true;
     }
 
-    public void addResources(ResourceList resList)
+    public boolean canAfford(ResourceList cost)
     {
-        resourceList.combineResourceList(resList);
+        for (HashMap.Entry<String, Resource> entry : cost.getProdList().entrySet()) {
+            String key = entry.getKey(); //get the type of resource
+            int value = entry.getValue().getValue(); //get the number of the value of current resource
+            if(( getResource(key).getValue()-value) < 0)
+                return false;
+        }
+        return true;
     }
+
+
 
     public ResourceManager() {
-        resourceList = new ResourceList(0,0,0,0,0,0,0,0,0);
+        resourceList = new ResourceList(5,10,20,30,0,10,10,0,20,0);
     }
 
-    public ResourceManager(ResourceList resourceList) {
-        this.resourceList = resourceList;
-    }
 }

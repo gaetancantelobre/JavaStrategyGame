@@ -1,0 +1,11 @@
+This a complex strategy game.
+The point of the game is to max out all your resources.
+You are given a grid of a certain size on which you may build buildings and structures.
+Each building has a construction cost , an upkeep, a production and a workforce size.
+At the end of each turn the building that met the required workforce will produce their products, and it will cost some resources to upkeep the building.
+If upkeep or workforce are not met the building will not produce.
+To make the game more difficult you can either skip a day manual or it will advance after doing large task like associating workforce or building something.
+Building have a certain shape
+In the menus you can view your building and your productions without any time cost.
+The point of the game is to reach the goal in a minimum amount of days.
+The main concept seems simple but it is quite hard to balance production, cost while managing space.
