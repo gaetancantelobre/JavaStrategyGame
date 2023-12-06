@@ -5,6 +5,19 @@ public class GameGrid {
     private ArrayList<Building> buildings= new ArrayList<Building>();
 
     int grid_x;
+
+    public char[][] getGrid() {
+        return grid;
+    }
+
+    public int getGrid_x() {
+        return grid_x;
+    }
+
+    public int getGrid_y() {
+        return grid_y;
+    }
+
     int grid_y;
 
     public ArrayList<Building> getBuildings() {

@@ -46,7 +46,9 @@ public class ResourceList {
             return true;
     }
 
-
+    public void setResource(String key, int value) {
+        getProdList().get(key).setAmount(value);
+    }
 
     public void combineResourceList(ResourceList rList)
     {

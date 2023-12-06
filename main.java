@@ -1,9 +1,9 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Scanner;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.stream.Stream;
 
 public class main {
 
@@ -39,15 +39,164 @@ public class main {
         System.out.println("2. Manage Population.");
         System.out.println("3. Show Current Stats and All buildings?");
         System.out.println("4. Go to next day");
+        System.out.println("5. Save the game");
+        System.out.println("6. load a save");
+
+
         Scanner userInput = new Scanner(System.in);
         String answer = userInput.nextLine();
         switch (answer){
+            case "build":
+            case "Build":
             case "1": printBuildingOptions(game);break;
+            case "manage":
+            case "pop":
             case "2": managePopulation(game);break;
+            case "stats":
             case "3": showTheStatsOfTheBuildings(game);break;
+            case "next":
             case "4": collectPayGoNextDay(game);break;
+            case "save":
+            case "5": saveGame(game);break;
+            case "load":
+            case "6":
+                Game newGame = loadGameSave();
+                if(newGame != null)
+                {
+                    game.overwriteGame(newGame);
+                    for(Building b : game.getGrid().getBuildings())
+                        System.out.println(b);
+                    System.out.println("Game loaded.");
+                    printMenuOptions(game);
+                }
+                else
+                    System.out.println("file could not be loaded.");
+                break;
+
+
             default:
                 System.out.println("Enter a correct selection number from above");break;
+        }
+    }
+
+    private static void saveGame(Game game)
+    {
+        System.out.println("Enter the save name pls. (just a name , dont add a file extension)");
+        Scanner userInput = new Scanner(System.in);
+        String answer = userInput.nextLine();
+        File file = new File("saves/"+answer+".txt");
+        if (file.exists()) {
+            if(file.delete())
+            {
+                System.out.println("deleted file");
+            }
+        }
+        try {
+            FileWriter myWriter = new FileWriter("saves/"+answer + ".txt",false);
+            myWriter.write(String.valueOf(game.grid.getGrid_x())+"\n");
+            myWriter.write(String.valueOf(game.grid.getGrid_y())+"\n");
+            myWriter.write("startb\n");
+
+
+            ArrayList<Building> buildingArrayList =  game.getGrid().getBuildings();
+            ArrayList<Building> newbuildingArrayList = new ArrayList<Building>(game.getGrid().getBuildings());
+
+            for(Building b : buildingArrayList) //copy buildings
+            {
+                if(b.getClass() == Habitation.class)
+                {
+                    myWriter.write(b.saveBuildingString() + "\n");
+                    newbuildingArrayList.remove(b);
+                }
+            }
+            for(Building b : newbuildingArrayList) //copy buildings
+            {
+                    myWriter.write(b.saveBuildingString() + "\n");
+            }
+            myWriter.write("endb\n");
+
+            myWriter.write("starts\n");
+
+            for (HashMap.Entry<String, Resource> entry : game.getStash().getResourceList().getProdList().entrySet()) {
+                String key = entry.getKey(); //get the type of resource
+                int value = entry.getValue().getValue(); //get the number of the value of current resource
+                System.out.println(key + value);
+                myWriter.write(String.valueOf(value) + "\n");
+            }
+            myWriter.write("ends\n");
+            myWriter.write(String.valueOf(game.getDayCounter()));
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch ( IOException e) {
+            System.out.println("Couldnt Save the file.");
+        }
+    }
+
+
+    private static Game loadGameSave()
+    {
+        System.out.println("Pls enter the name of the file , as it was saved , without the extension : \"save\"");
+        Scanner userInput = new Scanner(System.in);
+        String filename = userInput.nextLine();
+        try {
+            File save = new File("saves/"+filename+".txt");
+            Scanner myReader = new Scanner(save);
+            if(save.length() == 0)
+            {
+                System.out.println("Save is empty.");
+                return null;
+            }
+            Game game = new Game(Integer.parseInt(myReader.nextLine()),Integer.parseInt(myReader.nextLine()));
+
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                if(Objects.equals(data, "startb"))
+                {
+                    while(!Objects.equals(data, "endb"))
+                    {
+                        data = myReader.nextLine();
+                        switch (data)
+                        {
+                            case "H":
+                                Habitation h = new Habitation(Integer.parseInt(myReader.nextLine()),Integer.parseInt(myReader.nextLine()));
+                                game.getGrid().placeBuildingOnGrid(h);
+                                myReader.nextLine();
+                                break;
+                            case "F" :
+                                Forest f = new Forest(Integer.parseInt(myReader.nextLine()),Integer.parseInt(myReader.nextLine()));
+                                game.getGrid().placeBuildingOnGrid(f);
+                                int wf = Integer.parseInt(myReader.nextLine());
+                                for(int i = 0; i < wf;i++)
+                                    game.getGrid().putWorkerInBuilding(game.getHabitants().get(0),f);
+                                break;
+                        }
+
+                    }
+                    data = myReader.nextLine();
+                    if(Objects.equals(data, "starts")) // copying stash resources
+                    {
+                        game.getStash().setResource("gold",Integer.parseInt(myReader.nextLine()));
+                        game.getStash().setResource("steel",Integer.parseInt(myReader.nextLine()));
+                        game.getStash().setResource("cement",Integer.parseInt(myReader.nextLine()));
+                        game.getStash().setResource("lumber",Integer.parseInt(myReader.nextLine()));
+                        game.getStash().setResource("coal",Integer.parseInt(myReader.nextLine()));
+                        game.getStash().setResource("iron",Integer.parseInt(myReader.nextLine()));
+                        game.getStash().setResource("wood",Integer.parseInt(myReader.nextLine()));
+                        game.getStash().setResource("tools",Integer.parseInt(myReader.nextLine()));
+                        game.getStash().setResource("food",Integer.parseInt(myReader.nextLine()));
+                        game.getStash().setResource("stone",Integer.parseInt(myReader.nextLine()));
+
+                    }
+                }
+
+            }
+            myReader.close();
+            for(Building b : game.getGrid().getBuildings())
+                System.out.println(b);
+            return game;
+        } catch (FileNotFoundException e) {
+            System.out.println("File not find pls enter the full name of the file");
+            return null;
         }
     }
 
@@ -183,7 +332,7 @@ public class main {
     static void printBuildingOptions(Game game)
     {
         ArrayList<Building> bList = new ArrayList<Building>();
-        bList.add(new Habitation(-1,-1,1));
+        bList.add(new Habitation(-1,-1));
         bList.add(new LumberMill(-1,-1));
         bList.add(new Quarry(-1,-1));
         bList.add(new Forest(-1, -1));
@@ -198,7 +347,7 @@ public class main {
         Scanner userInput = new Scanner(System.in);
         String answer = userInput.nextLine();
         switch (answer){
-            case "Habitation": buildBuilding(new Habitation(-1,-1,1),game);break;
+            case "Habitation": buildBuilding(new Habitation(-1,-1),game);break;
             case "LumberMill": buildBuilding(new LumberMill(-1,-1),game);break;
             case "Quarry": buildBuilding(new Quarry(-1,-1),game);break;
             case "Forest": buildBuilding(new Forest(-1,-1),game);break;

@@ -104,6 +104,10 @@ public abstract  class Building {
         return getClass() + " at (" + getPos_x() + " " + getPos_y() + ") CWF : " + getWorkerList().size();
     }
 
+
+    public String saveBuildingString() {
+        return buildingLogo + "\n" + getPos_x() + "\n" + getPos_y() + "\n" + getWorkerList().size();
+    }
     public String buyingOptions()
     {
         StringBuilder stringBuilder = new StringBuilder();

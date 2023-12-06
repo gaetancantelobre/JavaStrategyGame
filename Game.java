@@ -10,6 +10,15 @@ public class Game {
         return dayCounter;
     }
 
+    public boolean overwriteGame(Game g)
+    {
+        if(g == null)
+            return false;
+        grid = g.getGrid();
+        dayCounter = g.getDayCounter();
+        stash = g.getStash();
+        return true;
+    }
     public ResourceList getFinal_goal() {
         return final_goal;
     }

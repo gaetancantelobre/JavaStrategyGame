@@ -9,7 +9,8 @@ public class ResourceManager {
     public Resource getResource(String resourceType) {
         return resourceList.getProdList().get(resourceType);
     }
-
+    public void setResource(String key, int value){ getResourceList().setResource(key,value);
+    }
     public ResourceList getResourceList() {
         return resourceList;
     }

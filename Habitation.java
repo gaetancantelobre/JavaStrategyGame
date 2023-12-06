@@ -3,9 +3,9 @@ import java.util.Map;
 
 public class Habitation extends Building{
 
-    int hab_lvl;
 
-    public Habitation(int pos_x, int pos_y, int hab_lvl) {
+
+    public Habitation(int pos_x, int pos_y) {
         super(pos_x, pos_y);
         size_x = 1;
         size_y = 1;
@@ -21,13 +21,9 @@ public class Habitation extends Building{
         }
     }
 
-    public void setHab_lvl(int hab_lvl) {
-        this.hab_lvl = hab_lvl;
-    }
 
-    public int getHab_lvl() {
-        return hab_lvl;
-    }
+
+
 
     public int getNbrHabitants()
     {
