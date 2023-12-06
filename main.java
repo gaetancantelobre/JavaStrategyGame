@@ -166,8 +166,13 @@ public class main {
                                 Forest f = new Forest(Integer.parseInt(myReader.nextLine()),Integer.parseInt(myReader.nextLine()));
                                 game.getGrid().placeBuildingOnGrid(f);
                                 int wf = Integer.parseInt(myReader.nextLine());
-                                for(int i = 0; i < wf;i++)
-                                    game.getGrid().putWorkerInBuilding(game.getHabitants().get(0),f);
+                                for(Habitant hab : game.getUnemployed())
+                                {
+                                    if(f.getWorkerList().size() < wf)
+                                        game.getGrid().putWorkerInBuilding(hab,f);
+                                    else
+                                        break;
+                                }
                                 break;
                         }
 
@@ -247,8 +252,12 @@ public class main {
         {
             for(Building b : game.getGrid().getBuildings())
             {
+                String strB = (cpt + " : " + b).replace("class"," ");
                 if(filling && !b.checkForMaxWorkers())
-                    System.out.println(cpt + " : " + b);
+                    System.out.println(strB);
+                else
+                    System.out.println(strB);
+
 
                 cpt++;
             }

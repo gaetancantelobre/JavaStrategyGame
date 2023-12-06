@@ -31,6 +31,8 @@ public class Game {
         System.out.print("Current Production : " + getGrid().getProductionOnGrid(getStash()).toStringSimple());
         System.out.print("Current UpKeep :     " + getGrid().getUpKeepOnGrid(getStash()).toStringSimple());
         System.out.println("Total population   : " + getGrid().getNbrOfInhabitants());
+        System.out.println("Nbr of unEmployed   : " + getGrid().getListOfUnemployed().size());
+
         if(getGrid().getNbrOfInhabitants() > 0)
         {
             System.out.print("Unemployment rate  : " + (getGrid().getListOfUnemployed().size()* 100)/ getGrid().getNbrOfInhabitants() + "%\n");
