@@ -13,7 +13,7 @@ public class LumberMill extends Building{
         buildingLogo = 'L';
 
 
-        buildingCost = new ResourceList(0,0,50,50,0,6,0,0,0,0);
+        buildingCost = new ResourceList(0,0,20,2,0,6,0,0,0,0);
         productionList = new ResourceList(0,0,4,0,0,0,0,0,0,0);
         upKeepList = new ResourceList(0,0,4,0,0,0,0,0,0,0);
     }

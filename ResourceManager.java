@@ -42,7 +42,7 @@ public class ResourceManager {
 
 
     public ResourceManager() {
-        resourceList = new ResourceList(5,10,20,30,0,10,10,0,20,0);
+        resourceList = new ResourceList(5,15,20,30,0,10,10,0,20,0);
     }
 
 }

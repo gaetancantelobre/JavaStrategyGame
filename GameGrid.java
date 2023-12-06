@@ -95,15 +95,19 @@ public class GameGrid {
         return rList;
     }
 
-    public void harvestProductionOnGrid(ResourceList stash)
+    public ArrayList<Building> harvestProductionOnGrid(ResourceList stash)
     {
+        ArrayList<Building> prodBList = new ArrayList<Building>();
+
         for(Building b : buildings){
-            if(stash.canAffordRL(b.getUpKeepList()))
+            if(stash.canAffordRL(b.getUpKeepList()) && b.checkForMaxWorkers())
             {
+                prodBList.add(b);
                 stash.diffResourceList(b.getUpKeepList());
                 stash.combineResourceList(b.getProductionList());
             }
         }
+        return prodBList;
     }
 
 

@@ -71,7 +71,6 @@ public abstract  class Building {
     }
 
 
-
     public int getSize_x() {
         return size_x;
     }
@@ -101,7 +100,7 @@ public abstract  class Building {
 
     @Override
     public String toString() {
-        return getClass() + " at (" + getPos_x() + " " + getPos_y() + ") CWF : " + getWorkerList().size();
+        return getClass() + " at (" + getPos_x() + " " + getPos_y() + ") CWF : " + getWorkerList().size() + " Maxed Out : " + checkForMaxWorkers();
     }
 
 

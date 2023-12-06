@@ -154,6 +154,7 @@ public class main {
                 {
                     while(!Objects.equals(data, "endb"))
                     {
+                        Building f = null;
                         data = myReader.nextLine();
                         switch (data)
                         {
@@ -163,18 +164,28 @@ public class main {
                                 myReader.nextLine();
                                 break;
                             case "F" :
-                                Forest f = new Forest(Integer.parseInt(myReader.nextLine()),Integer.parseInt(myReader.nextLine()));
-                                game.getGrid().placeBuildingOnGrid(f);
-                                int wf = Integer.parseInt(myReader.nextLine());
-                                for(Habitant hab : game.getUnemployed())
-                                {
-                                    if(f.getWorkerList().size() < wf)
-                                        game.getGrid().putWorkerInBuilding(hab,f);
-                                    else
-                                        break;
-                                }
+                                 f = new Forest(Integer.parseInt(myReader.nextLine()),Integer.parseInt(myReader.nextLine()));
                                 break;
+                            case "C":
+                                 f = new CementPlant(Integer.parseInt(myReader.nextLine()),Integer.parseInt(myReader.nextLine()));
+                                break;
+                            case "L":
+                                f = new LumberMill(Integer.parseInt(myReader.nextLine()),Integer.parseInt(myReader.nextLine()));
+                                break;
+                            case "S":
+                                f = new SteelMill(Integer.parseInt(myReader.nextLine()),Integer.parseInt(myReader.nextLine()));
+                                break;
+                            case "T":
+                                f = new ToolFactory(Integer.parseInt(myReader.nextLine()),Integer.parseInt(myReader.nextLine()));
+                                break;
+                            case "Q":
+                                f = new Quarry(Integer.parseInt(myReader.nextLine()),Integer.parseInt(myReader.nextLine()));
+                                break;
+
+
                         }
+                        if(f != null)
+                            saveProductionBuilding(game,myReader,f);
 
                     }
                     data = myReader.nextLine();
@@ -205,13 +216,28 @@ public class main {
         }
     }
 
+    static void saveProductionBuilding(Game game, Scanner myReader,Building f)
+    {
+        game.getGrid().placeBuildingOnGrid(f);
+        int wf = Integer.parseInt(myReader.nextLine());
+        for(Habitant hab : game.getUnemployed())
+        {
+            if(f.getWorkerList().size() < wf)
+                game.getGrid().putWorkerInBuilding(hab,f);
+            else
+                break;
+        }
+    }
+
+    static ArrayList<Building> producingBList = new ArrayList<>();
     private static void collectPayGoNextDay(Game game) {
-       game.getGrid().harvestProductionOnGrid(game.getStash().getResourceList());
+        producingBList = game.getGrid().harvestProductionOnGrid(game.getStash().getResourceList());
         game.increaseDayCounter();
     }
 
     private static void showTheStatsOfTheBuildings(Game game) {
         chooseBuilding(game,false,false);
+        game.printSUKP();
         printMenuOptions(game);
     }
 
@@ -255,8 +281,20 @@ public class main {
                 String strB = (cpt + " : " + b).replace("class"," ");
                 if(filling && !b.checkForMaxWorkers())
                     System.out.println(strB);
-                else
+                else if(!filling)
+                {
                     System.out.println(strB);
+                    if(producingBList.remove(b))
+                    {
+                        System.out.println("Producing");
+                        producingBList.add(b);
+                    }
+                    else
+                    {
+                        System.out.println("Not producing");
+
+                    }
+                }
 
 
                 cpt++;
@@ -346,7 +384,9 @@ public class main {
         bList.add(new Quarry(-1,-1));
         bList.add(new Forest(-1, -1));
         bList.add(new CementPlant(-1,-1));
-        bList.add(new Forge(-1,-1));
+        bList.add(new SteelMill(-1,-1));
+        bList.add(new ToolFactory(-1,-1));
+
 
         for(Building b : bList)
         {
@@ -356,12 +396,26 @@ public class main {
         Scanner userInput = new Scanner(System.in);
         String answer = userInput.nextLine();
         switch (answer){
+            case "H":
             case "Habitation": buildBuilding(new Habitation(-1,-1),game);break;
+            case "L":
+
             case "LumberMill": buildBuilding(new LumberMill(-1,-1),game);break;
+            case "Q":
+
             case "Quarry": buildBuilding(new Quarry(-1,-1),game);break;
+            case "F":
+
             case "Forest": buildBuilding(new Forest(-1,-1),game);break;
+            case "C":
+
             case "Cement Plant": buildBuilding(new CementPlant(-1,-1),game);break;
-            case "Forge": buildBuilding(new Forge(-1,-1),game);break;
+            case "S":
+
+            case "SteelMill": buildBuilding(new SteelMill(-1,-1),game);break;
+            case "T":
+
+            case "ToolFactory": buildBuilding(new ToolFactory(-1,-1),game);break;
             default:
                 System.out.println("pls enter a correct choice, returning to main menu");printMenuOptions(game);
         }
