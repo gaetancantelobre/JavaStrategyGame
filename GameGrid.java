@@ -265,6 +265,34 @@ public class GameGrid {
         }
         return true;
     }
+    public void updateBuildingDelay(){
+        for(Building b : getBuildings())
+        {
+            System.out.println(b.building_delay);
+            System.out.println(b.built);
+
+            if(b.getBuilding_delay()  > 0 && !b.built)
+            {
+                b.setBuilding_delay(b.getBuilding_delay()-1);
+            }else if(b.getBuilding_delay() <= 0 && !b.built)
+            {
+                System.out.println("hello");
+                replaceConstructionWithLogo(b);
+                //placeBuildingOnGrid(b);
+                b.built = true;
+            }
+        }
+    }
+
+    private void replaceConstructionWithLogo(Building wantedB)
+    {
+        for(int j = 0; j < wantedB.getSize_y();j++) {
+            for (int i = 0; i < wantedB.getSize_x(); i++) {
+                grid[wantedB.pos_y + j][wantedB.pos_x + i] = wantedB.getBuildingLogo();
+            }
+
+        }
+    }
 
     public boolean placeBuildingOnGrid(Building wantedB)
     {
@@ -274,7 +302,15 @@ public class GameGrid {
             {
                 for(int i = 0;i < wantedB.getSize_x();i++)
                 {
-                    grid[wantedB.pos_y+j][wantedB.pos_x+i] = wantedB.getBuildingLogo();
+                    if(wantedB.built)
+                    {
+                        grid[wantedB.pos_y+j][wantedB.pos_x+i] = wantedB.getBuildingLogo();
+                    }
+                    else
+                    {
+                        grid[wantedB.pos_y+j][wantedB.pos_x+i] = '!';
+                    }
+
                 }
             }
             buildings.add(wantedB);

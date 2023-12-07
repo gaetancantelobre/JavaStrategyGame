@@ -11,6 +11,7 @@ public class LumberMill extends Building{
         maxWorkers = 10;
 
         buildingLogo = 'L';
+        building_delay = 3;
 
 
         buildingCost = new ResourceList(0,0,20,2,0,6,0,0,0,0);

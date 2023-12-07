@@ -5,6 +5,7 @@ public class SteelMill extends Building{
         size_y = 2;
         maxWorkers = 15;
         name = "SteelMill";
+        building_delay = 4;
         buildingLogo = 'S';
         buildingCost = new ResourceList(0,0,100,50,0,6,0,0,0,0);
         productionList = new ResourceList(0,0,0,0,4,0,0,0,0,0);

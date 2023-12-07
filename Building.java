@@ -7,6 +7,18 @@ public abstract  class Building {
     int pos_x;
     int pos_y;
 
+
+    boolean built;
+    public void setBuilding_delay(int building_delay) {
+        this.building_delay = building_delay;
+    }
+
+    int building_delay;
+
+    public int getBuilding_delay() {
+        return building_delay;
+    }
+
     String name;
 
     public String getName() {
@@ -87,8 +99,14 @@ public abstract  class Building {
    ResourceList buildingCost;
 
     public ResourceList getProductionList() {
-        if(checkForMaxWorkers())
+        if(maxWorkers == 0)
             return  productionList;
+        if(built)
+        {
+            System.out.println((float) getWorkerList().size() /maxWorkers);
+            return productionList.multipleResourceList((float) getWorkerList().size() /maxWorkers);
+
+        }
         else
             return new ResourceList(0,0,0,0,0,0,0,0,0,0);
     }
@@ -105,7 +123,7 @@ public abstract  class Building {
 
 
     public String saveBuildingString() {
-        return buildingLogo + "\n" + getPos_x() + "\n" + getPos_y() + "\n" + getWorkerList().size();
+        return buildingLogo + "\n" + getPos_x() + "\n" + getPos_y() + "\n" + getWorkerList().size() + "\n" + building_delay + "\n" + built;
     }
     public String buyingOptions()
     {
@@ -126,6 +144,7 @@ public abstract  class Building {
     public Building(int pos_x, int pos_y) {
         this.pos_x = pos_x;
         this.pos_y = pos_y;
+        this.built = false;
         habitantList = new ArrayList<Habitant>();
         workerList = new ArrayList<Habitant>();
     }

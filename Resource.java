@@ -11,6 +11,11 @@ public  abstract class Resource {
         amount += value;
     }
 
+    public void setValue(int value)
+    {
+        amount = value;
+    }
+
     public void setAmount(int amount) {
         this.amount = amount;
     }

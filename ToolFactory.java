@@ -5,6 +5,7 @@ public class ToolFactory extends Building{
         size_y = 4;
         maxWorkers = 30;
         name = "ToolFactory";
+        building_delay = 6;
         buildingLogo = 'T';
         buildingCost = new ResourceList(0,0,50,50,0,6,0,50,0,0);
         productionList = new ResourceList(0,0,0,0,0,0,0,0,5,0);

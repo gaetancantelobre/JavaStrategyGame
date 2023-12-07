@@ -182,8 +182,6 @@ public class main {
                             case "Q":
                                 f = new Quarry(Integer.parseInt(myReader.nextLine()),Integer.parseInt(myReader.nextLine()));
                                 break;
-
-
                         }
                         if(f != null)
                             saveProductionBuilding(game,myReader,f);
@@ -211,8 +209,6 @@ public class main {
 
             }
             myReader.close();
-            for(Building b : game.getGrid().getBuildings())
-                System.out.println(b);
             return game;
         } catch (FileNotFoundException e) {
             System.out.println("File not find pls enter the full name of the file");
@@ -231,11 +227,14 @@ public class main {
             else
                 break;
         }
+        f.building_delay = Integer.parseInt(myReader.nextLine());
+        f.built = Objects.equals(myReader.nextLine(), "true");
     }
 
     static ArrayList<Building> producingBList = new ArrayList<>();
     private static void collectPayGoNextDay(Game game) {
         producingBList = game.getGrid().harvestProductionOnGrid(game.getStash().getResourceList());
+        game.getGrid().updateBuildingDelay();
         game.increaseDayCounter();
     }
 

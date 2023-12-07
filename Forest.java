@@ -11,6 +11,7 @@ public class Forest extends Building{
         maxWorkers = 10;
 
         buildingLogo = 'F';
+        building_delay = 5;
 
         buildingCost = new ResourceList(0,0,0,10,0,6,0,0,4,0);
         productionList = new ResourceList(20,0,0,0,0,0,0,0,0,0);

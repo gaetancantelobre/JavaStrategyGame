@@ -33,7 +33,16 @@ public class ResourceList {
         return prodList;
     }
 
-
+    public ResourceList multipleResourceList(float multiplier)
+    {
+        ResourceList rl = new ResourceList(0,0,0,0,0,0,0,0,0,0);
+        for (HashMap.Entry<String, Resource> entry : prodList.entrySet()) {
+            String key = entry.getKey(); //get the type of resource
+            int value = entry.getValue().getValue(); //get the number of the value of current resource
+            rl.getProdList().get(key).setValue((int) (value*multiplier));
+        }
+        return rl;
+    }
     public boolean checkIfEmpty()
     {
             for (HashMap.Entry<String, Resource> entry : getProdList().entrySet()) {
