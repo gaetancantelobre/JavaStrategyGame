@@ -86,6 +86,30 @@ public class GameGrid {
         return rList;
     }
 
+
+    public ArrayList<Habitant> getFedWorkers()
+    {
+        ArrayList<Habitant> fedWorkers = new ArrayList<Habitant>();
+        for(Habitant h : getListOfHabitants())
+        {
+            if(h.isFed() && h.getWorkPlace()!= null)
+                fedWorkers.add(h);
+        }
+        return fedWorkers;
+    }
+
+
+    public ArrayList<Habitant> getWorkers()
+    {
+        ArrayList<Habitant> workers = new ArrayList<Habitant>();
+        for(Habitant h : getListOfHabitants())
+        {
+            if(h.getWorkPlace()!= null)
+                workers.add(h);
+        }
+        return workers;
+    }
+
     public ResourceList getProductionOnGrid()
     {
         ResourceList rList = new ResourceList(0,0,0,0,0,0,0,0,0,0);
@@ -98,7 +122,7 @@ public class GameGrid {
     public ArrayList<Building> harvestProductionOnGrid(ResourceList stash)
     {
         ArrayList<Building> prodBList = new ArrayList<Building>();
-
+        feedWorkers(stash);
         for(Building b : buildings){
             if(stash.canAffordRL(b.getUpKeepList()) && b.checkForMaxWorkers())
             {
@@ -110,6 +134,14 @@ public class GameGrid {
         return prodBList;
     }
 
+
+    private void feedWorkers(ResourceList stash)
+    {
+        for(Habitant h : getWorkers())
+        {
+            h.feedHabitant(stash);
+        }
+    }
 
     public int getNbrOfInhabitants()
     {
@@ -225,6 +257,15 @@ public class GameGrid {
         }
     }
 
+    public ResourceList getFoodCostForGrid()
+    {
+        ResourceList rList = new ResourceList(0,0,0,0,0,0,0,0,0,0);
+        for(Building b : getBuildings())
+        {
+            rList.setResource("food", getListOfHabitants().size());
+        }
+        return rList;
+    }
 
 
     private boolean checkForSizeOnGrid(int x , int y ,Building wantedB)
@@ -253,9 +294,6 @@ public class GameGrid {
             {
                 for(int j = 0; j < wantedB.getSize_y();j++)
                 {
-
-                    System.out.println("grid symbol: " + grid[x+i][y+j]);
-                    System.out.println("x y: " + (x+i) + (y+j));
                     if(grid[y+j][x+1] != '¤')
                     {
                         System.out.println("edges of building overlap");
@@ -277,15 +315,13 @@ public class GameGrid {
                 b.setBuilding_delay(b.getBuilding_delay()-1);
             }else if(b.getBuilding_delay() <= 0 && !b.built)
             {
-                System.out.println("hello");
                 replaceConstructionWithLogo(b);
-                //placeBuildingOnGrid(b);
                 b.built = true;
             }
         }
     }
 
-    private void replaceConstructionWithLogo(Building wantedB)
+    public void replaceConstructionWithLogo(Building wantedB)
     {
         for(int j = 0; j < wantedB.getSize_y();j++) {
             for (int i = 0; i < wantedB.getSize_x(); i++) {
@@ -315,6 +351,7 @@ public class GameGrid {
                 {
                     if(wantedB.built)
                     {
+                        System.out.println("hello im building shoit");
                         grid[wantedB.pos_y+j][wantedB.pos_x+i] = wantedB.getBuildingLogo();
                     }
                     else

@@ -239,6 +239,9 @@ public class main {
         }
         f.building_delay = Integer.parseInt(myReader.nextLine());
         f.built = Objects.equals(myReader.nextLine(), "true");
+        if(f.built){
+            game.getGrid().replaceConstructionWithLogo(f);
+        }
     }
 
     static ArrayList<Building> producingBList = new ArrayList<>();
@@ -262,7 +265,6 @@ public class main {
                 System.out.println("1. fill building with workers ?");
                 System.out.println("2. add 1 worker to a building ?");
             }
-
             System.out.println("3. Remove a workers from a building ?");
             System.out.println("4. Remove all workers from a building ?");
 
@@ -284,6 +286,7 @@ public class main {
         }
 
     }
+
 
     private static Building chooseBuilding(Game game, boolean choose,boolean filling) {
         int cpt = 0;

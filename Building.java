@@ -95,6 +95,19 @@ public abstract  class Building {
         return buildingLogo;
     }
 
+
+    int getNbrFedWorkers()
+    {
+        int cpt = 0;
+        for(Habitant h : getWorkerList())
+        {
+            if(h.isFed())
+                cpt++;
+
+        }
+        return cpt;
+    }
+
     char buildingLogo;
    ResourceList buildingCost;
 
@@ -103,9 +116,7 @@ public abstract  class Building {
             return  productionList;
         if(built)
         {
-            System.out.println((float) getWorkerList().size() /maxWorkers);
-            return productionList.multipleResourceList((float) getWorkerList().size() /maxWorkers);
-
+            return productionList.multipleResourceList((float) getNbrFedWorkers() /maxWorkers);
         }
         else
             return new ResourceList(0,0,0,0,0,0,0,0,0,0);
