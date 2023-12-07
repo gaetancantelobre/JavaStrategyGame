@@ -218,7 +218,8 @@ public class GameGrid {
         }
         else
         {
-            removeWorkerFromBuilding(wantedB);
+            removeAllWorkersFromBuilding(wantedB);
+            clearBuildingLogos(wantedB);
             getBuildings().remove(wantedB);
             return true;
         }
@@ -291,6 +292,16 @@ public class GameGrid {
                 grid[wantedB.pos_y + j][wantedB.pos_x + i] = wantedB.getBuildingLogo();
             }
 
+        }
+    }
+
+
+    private void clearBuildingLogos(Building wantedB)
+    {
+        for(int j = 0; j < wantedB.getSize_y();j++) {
+            for (int i = 0; i < wantedB.getSize_x(); i++) {
+                grid[wantedB.pos_y + j][wantedB.pos_x + i] = '¤';
+            }
         }
     }
 

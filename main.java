@@ -41,6 +41,7 @@ public class main {
         System.out.println("4. Go to next day");
         System.out.println("5. Save the game");
         System.out.println("6. load a save");
+        System.out.println("7. remove building from grid (you will lose the resources)");
 
 
         Scanner userInput = new Scanner(System.in);
@@ -73,11 +74,20 @@ public class main {
                 else
                     System.out.println("file could not be loaded.");
                 break;
-
+            case "7":
+            case "destroy":
+            case "remove":
+            case "rm":
+                removeSelectedBuilding(game);
+                break;
 
             default:
                 System.out.println("Enter a correct selection number from above");break;
         }
+    }
+
+    private static void removeSelectedBuilding(Game game) {
+        game.getGrid().removeBuildingFromGrid(chooseBuilding(game,true,false));
     }
 
     private static void saveGame(Game game)
@@ -286,11 +296,15 @@ public class main {
                     System.out.println(strB);
                 else if(!filling) {
                     System.out.println(strB);
-                    if (producingBList.remove(b)) {
-                        System.out.println("Producing");
-                        producingBList.add(b);
-                    } else
-                        System.out.println("Not producing");
+                    if(!choose)
+                    {
+                        if (producingBList.remove(b)) {
+                            System.out.println("Producing");
+                            producingBList.add(b);
+                        } else
+                            System.out.println("Not producing");
+                    }
+
                 }
 
 
