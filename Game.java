@@ -57,7 +57,7 @@ public class Game {
 
     public boolean checkEndGame()
     {
-        return final_goal.getProdList() == stash.getResourceList().getProdList();
+        return stash.getResourceList().isGreaterThan(final_goal);
     }
 
     public void increaseDayCounter() {

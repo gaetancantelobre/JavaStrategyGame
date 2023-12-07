@@ -12,8 +12,8 @@ public class Forest extends Building{
 
         buildingLogo = 'F';
 
-        buildingCost = new ResourceList(0,0,0,20,0,6,0,0,4,0);
-        productionList = new ResourceList(0,0,20,0,0,0,0,0,0,0);
-        upKeepList = new ResourceList(0,2,0,0,0,0,0,0,0,0);
+        buildingCost = new ResourceList(0,0,0,10,0,6,0,0,4,0);
+        productionList = new ResourceList(20,0,0,0,0,0,0,0,0,0);
+        upKeepList = new ResourceList(0,0,0,0,0,0,0,0,0,0);
     }
 }

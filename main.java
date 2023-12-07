@@ -16,8 +16,8 @@ public class main {
            printMenuOptions(game);
            game.printSUKP();
        }
+        System.out.println("Congrats you have finished the challenges in : "+ game.getDayCounter() + "days");
     }
-
 
     static void printIntroAndRules() throws IOException {
         BufferedReader br = new BufferedReader(new FileReader("intro.txt"));
@@ -67,6 +67,7 @@ public class main {
                     for(Building b : game.getGrid().getBuildings())
                         System.out.println(b);
                     System.out.println("Game loaded.");
+                    collectPayGoNextDay(game);
                     printMenuOptions(game);
                 }
                 else
@@ -203,6 +204,9 @@ public class main {
                         game.getStash().setResource("stone",Integer.parseInt(myReader.nextLine()));
 
                     }
+                    myReader.nextLine();
+                    data = myReader.nextLine();
+                    game.dayCounter = Integer.parseInt(data);
                 }
 
             }
@@ -281,19 +285,13 @@ public class main {
                 String strB = (cpt + " : " + b).replace("class"," ");
                 if(filling && !b.checkForMaxWorkers())
                     System.out.println(strB);
-                else if(!filling)
-                {
+                else if(!filling) {
                     System.out.println(strB);
-                    if(producingBList.remove(b))
-                    {
+                    if (producingBList.remove(b)) {
                         System.out.println("Producing");
                         producingBList.add(b);
-                    }
-                    else
-                    {
+                    } else
                         System.out.println("Not producing");
-
-                    }
                 }
 
 
@@ -348,7 +346,7 @@ public class main {
         finally {
             if(!game.getGrid().checkCoordsAvailable(x,y,wantedB))
             {
-                System.out.println("The coordinates are not available or will overlap on other building or out of bounds");
+               System.out.println("The coordinates are not available or will overlap on other building or out of bounds");
             }
             if(x == -1 || y == -1)
                 System.out.println("Canceled the building of the structure");
@@ -363,9 +361,6 @@ public class main {
                     {
                         System.out.println("Building : " + wantedB.getName() + " built correctly");
                         game.increaseDayCounter();
-                    }else
-                    {
-                        System.out.println("broke");
                     }
 
                 }

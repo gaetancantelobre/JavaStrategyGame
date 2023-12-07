@@ -123,7 +123,10 @@ public class GameGrid {
     public boolean putWorkerInBuilding(Habitant hab, Building wantedB)
     {
         if(wantedB == null)
+        {
             return false;
+
+        }
         if(!wantedB.checkForMaxWorkers())
         {
             wantedB.getWorkerList().add(hab);
@@ -225,25 +228,38 @@ public class GameGrid {
 
     private boolean checkForSizeOnGrid(int x , int y ,Building wantedB)
     {
-        return x + wantedB.getSize_x() < grid_x && y + wantedB.getSize_y() < grid_y && x >= 0 && y >= 0;
+        System.out.println(x + wantedB.getSize_x()-1);
+        System.out.println(y + wantedB.getSize_y()-1);
+        return x + wantedB.getSize_x()-1 <= grid_x && y + wantedB.getSize_y()-1 <= grid_y && x >= 0 && y >= 0;
     }
 
     public boolean checkCoordsAvailable(int x,int y,Building wantedB)
     {
         if(!checkForSizeOnGrid(x,y,wantedB))
+        {
+            System.out.println("Out of bounds");
             return false;
+
+        }
         for(Building b : buildings)
         {
             if(b.getPos_x() == x && b.getPos_y() == y)
             {
+                System.out.println("overlap other building base");
                 return false;
             }
             for(int i = 0;i < wantedB.getSize_x();i++)
             {
                 for(int j = 0; j < wantedB.getSize_y();j++)
                 {
-                    if(grid[x+i][y+i] != '¤')
+
+                    System.out.println("grid symbol: " + grid[x+i][y+j]);
+                    System.out.println("x y: " + (x+i) + (y+j));
+                    if(grid[y+j][x+1] != '¤')
+                    {
+                        System.out.println("edges of building overlap");
                         return false;
+                    }
                 }
             }
         }
@@ -254,11 +270,11 @@ public class GameGrid {
     {
         if(checkCoordsAvailable(wantedB.pos_x, wantedB.pos_y, wantedB))
         {
-            for(int i = 0;i < wantedB.getSize_x();i++)
+            for(int j = 0; j < wantedB.getSize_y();j++)
             {
-                for(int j = 0; j < wantedB.getSize_y();j++)
+                for(int i = 0;i < wantedB.getSize_x();i++)
                 {
-                    grid[wantedB.pos_x+i][wantedB.pos_y+j] = wantedB.getBuildingLogo();
+                    grid[wantedB.pos_y+j][wantedB.pos_x+i] = wantedB.getBuildingLogo();
                 }
             }
             buildings.add(wantedB);

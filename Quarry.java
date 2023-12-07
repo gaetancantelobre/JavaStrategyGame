@@ -5,8 +5,9 @@ public class Quarry extends Building{
         size_y = 2;
         name = "Quarry";
         buildingLogo = 'Q';
+        maxWorkers =  10;
         buildingCost = new ResourceList(0,0,50,0,0,4,0,0,0,0);
-        productionList = new ResourceList(0,4,0,4,0,2,1,0,0,4);
-        upKeepList = new ResourceList(0,2,10,0,0,0,0,0,0,0);
+        productionList = new ResourceList(0,10,0,12,0,2,0,0,0,9);
+        upKeepList = new ResourceList(0,0,10,0,0,0,0,0,0,0);
     }
 }

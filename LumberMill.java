@@ -14,7 +14,7 @@ public class LumberMill extends Building{
 
 
         buildingCost = new ResourceList(0,0,20,2,0,6,0,0,0,0);
-        productionList = new ResourceList(0,0,4,0,0,0,0,0,0,0);
-        upKeepList = new ResourceList(0,0,4,0,0,0,0,0,0,0);
+        productionList = new ResourceList(0,0,30,0,0,0,0,0,0,0);
+        upKeepList = new ResourceList(10,0,4,0,0,0,0,0,0,0);
     }
 }

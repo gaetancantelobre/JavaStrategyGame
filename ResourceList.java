@@ -63,6 +63,20 @@ public class ResourceList {
 
     }
 
+    public boolean isGreaterThan(ResourceList rList)
+    {
+        if(rList != null)
+        {
+            for (HashMap.Entry<String, Resource> entry : rList.getProdList().entrySet()) {
+                String key = entry.getKey(); //get the type of resource
+                int value = entry.getValue().getValue(); //get the number of the value of current resource
+                if(prodList.get(key).getValue() < value)
+                    return false;
+            }
+        }
+        return true;
+    }
+
 
     public void diffResourceList(ResourceList rList)
     {
