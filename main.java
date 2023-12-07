@@ -397,7 +397,7 @@ public class main {
         bList.add(new CementPlant(-1,-1));
         bList.add(new SteelMill(-1,-1));
         bList.add(new ToolFactory(-1,-1));
-
+        bList.add(new WheatFarm(-1,-1));
 
         for(Building b : bList)
         {
@@ -427,6 +427,10 @@ public class main {
             case "T":
 
             case "ToolFactory": buildBuilding(new ToolFactory(-1,-1),game);break;
+            case "W":
+            case "Food":
+
+            case "WheatFarm": buildBuilding(new ToolFactory(-1,-1),game);break;
             default:
                 System.out.println("pls enter a correct choice, returning to main menu");printMenuOptions(game);
         }
