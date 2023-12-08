@@ -3,6 +3,9 @@ import java.util.HashMap;
 public class ResourceList {
     HashMap<String,Resource> prodList;
 
+
+    // Resources lists are hashmaps containing a key for each type of resource
+    //they are use for storage and transaction
     public ResourceList( int lumber, int coal , int wood, int stone , int steel, int gold, int food, int cement,int tools,int iron) {
         prodList = new HashMap<String,Resource>();
         prodList.put("lumber",new Lumber(lumber));
@@ -18,6 +21,7 @@ public class ResourceList {
 
     }
 
+    //checks if this RL can afford to substract the other RL
     public boolean canAffordRL(ResourceList RL)
     {
         for (HashMap.Entry<String, Resource> entry : RL.getProdList().entrySet()) {
@@ -33,7 +37,9 @@ public class ResourceList {
         return prodList;
     }
 
-    public ResourceList multipleResourceList(float multiplier)
+
+    //multiplies the RL by a factor
+    public ResourceList multiplyResourceList(float multiplier)
     {
         ResourceList rl = new ResourceList(0,0,0,0,0,0,0,0,0,0);
         for (HashMap.Entry<String, Resource> entry : prodList.entrySet()) {
@@ -43,6 +49,8 @@ public class ResourceList {
         }
         return rl;
     }
+
+    //checks if the RL has no resources stocked
     public boolean checkIfEmpty()
     {
             for (HashMap.Entry<String, Resource> entry : getProdList().entrySet()) {
@@ -55,10 +63,13 @@ public class ResourceList {
             return true;
     }
 
+    // sets  a specific resource in th RL to a value
     public void setResource(String key, int value) {
         getProdList().get(key).setAmount(value);
     }
 
+
+    // combines to RL into 1
     public void combineResourceList(ResourceList rList)
     {
         if(rList != null)
@@ -72,6 +83,7 @@ public class ResourceList {
 
     }
 
+    // checks if this RL is greater of resources for each resource
     public boolean isGreaterThan(ResourceList rList)
     {
         if(rList != null)
@@ -87,6 +99,7 @@ public class ResourceList {
     }
 
 
+    //Substracts this RL by rList
     public void diffResourceList(ResourceList rList)
     {
         if(rList != null)
@@ -100,6 +113,8 @@ public class ResourceList {
 
     }
 
+
+    //returns a string with all the resources asn their quantities
     @Override
     public String toString() {
         StringBuilder cat = new StringBuilder();
@@ -112,6 +127,8 @@ public class ResourceList {
         return cat.toString();
     }
 
+
+    // same thing as toString() but does print resources that are at 0
     public String toStringSimple() {
         StringBuilder cat = new StringBuilder();
         int cpt = 0;

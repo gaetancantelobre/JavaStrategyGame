@@ -7,6 +7,15 @@ public class Habitant {
         return fed;
     }
 
+    public void setWorkPlace(Building workPlace) {
+        this.workPlace = workPlace;
+    }
+
+    public Building getWorkPlace() {
+        return workPlace;
+    }
+    // tries to feed the habitant, if possible it is now fed
+
     public void feedHabitant(ResourceList rl)
     {
         ResourceList cost = new ResourceList(0,0,0,0,0,0,1,0,0,0);
@@ -18,11 +27,7 @@ public class Habitant {
             fed = false;
     }
 
-    public Building getWorkPlace() {
-        return workPlace;
-    }
 
-    public void setWorkPlace(Building workPlace) {
-        this.workPlace = workPlace;
-    }
+
+
 }

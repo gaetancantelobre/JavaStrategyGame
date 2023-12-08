@@ -7,7 +7,7 @@ public class WheatFarm extends Building{
             name = "Farm";
             maxWorkers = 3;
 
-            buildingLogo = 'w';
+            buildingLogo = 'W';
             building_delay = 1;
 
             buildingCost = new ResourceList(0,0,0,10,0,6,0,0,2,0);
@@ -16,4 +16,3 @@ public class WheatFarm extends Building{
         }
     }
 
-}

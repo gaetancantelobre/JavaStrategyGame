@@ -3,8 +3,6 @@ import java.util.Map;
 
 public class Habitation extends Building{
 
-
-
     public Habitation(int pos_x, int pos_y) {
         super(pos_x, pos_y);
         size_x = 1;
@@ -16,17 +14,9 @@ public class Habitation extends Building{
         productionList = new ResourceList(0,0,0,0,0,1,1,0,0,0);
         upKeepList = new ResourceList(0,0,0,0,0,0,0,0,0,0);
 
-        for(int i = 0; i < maxHabs; i++){
+        for(int i = 0; i < maxHabs; i++){ //this building creates a certain number of inhabitants
             habitantList.add(new Habitant());
         }
     }
 
-
-
-
-
-    public int getNbrHabitants()
-    {
-        return habitantList.size();
-    }
 }

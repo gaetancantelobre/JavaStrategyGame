@@ -2,9 +2,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Game {
-    GameGrid grid;
-    int dayCounter;
-    ResourceManager stash;
+    GameGrid grid; //visual representation of the buildings
+    int dayCounter; // the number of days have passed in the game, allows to track the time it took to win.
+    ResourceManager stash; // class containing a resourcelist that is your stash of resources in the game
+
+    ResourceList final_goal = new ResourceList(100,100,100,100,100,100,100,100,100,100);
+
 
     public int getDayCounter() {
         return dayCounter;
@@ -19,10 +22,10 @@ public class Game {
         stash = g.getStash();
         return true;
     }
-    public ResourceList getFinal_goal() {
-        return final_goal;
-    }
 
+
+
+    //print functon showing all the stats of the game, printed every turn
     void printSUKP()
     {
         getGrid().printAndUpdateGrid();
@@ -42,19 +45,16 @@ public class Game {
         }
     }
 
-    public ResourceList getNetGainOnGrid()
-    {
-        ResourceList gain = getGrid().getProductionOnGrid();
-        gain.diffResourceList(getGrid().getUpKeepOnGrid(getStash()));
-        return gain;
-    }
-    ResourceList final_goal = new ResourceList(100,100,100,100,100,100,100,100,100,100);
-
-
     public Game(int size_x, int size_y) {
         this.grid = new GameGrid(size_x,size_y);
         stash = new ResourceManager();
         dayCounter = 0;
+    }
+
+    //getters and setters
+    //returns the target goal that when reached means you beat the game
+    public ResourceList getFinal_goal() {
+        return final_goal;
     }
 
     public boolean checkEndGame()
@@ -74,8 +74,6 @@ public class Game {
         return stash;
     }
 
-
-
     public ArrayList<Habitant> getUnemployed()
     {
         return getGrid().getListOfUnemployed();
@@ -89,6 +87,8 @@ public class Game {
     public Game(GameGrid grid) {
         this.grid = grid;
     }
+
+
 
 
 }

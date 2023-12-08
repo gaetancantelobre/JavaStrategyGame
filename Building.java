@@ -9,33 +9,39 @@ public abstract  class Building {
 
 
     boolean built;
-    public void setBuilding_delay(int building_delay) {
-        this.building_delay = building_delay;
-    }
 
-    int building_delay;
+    int building_delay; // the number of days it takes to build a building
 
-    public int getBuilding_delay() {
-        return building_delay;
-    }
 
     String name;
+
+
+    ArrayList<Habitant> habitantList; //list of people living in the building (only used for Habitation)
+    int maxHabs;
+    ArrayList<Habitant> workerList; //list of workers that are assigned to the building
+    int maxWorkers;
+
+    ResourceList productionList; // what the building will produce when the best conditions are met
+
+    ResourceList constructionList; // construction cost of the building
+
+    ResourceList upKeepList; // what the building needs to be able to produce every turn
+    char buildingLogo; //the char that represents the building in the grid
+    ResourceList buildingCost;
+
+
+ // getter and setters
+ public int getBuilding_delay() {
+     return building_delay;
+ }
+
+ public void setBuilding_delay(int building_delay) {
+     this.building_delay = building_delay;
+ }
 
     public String getName() {
         return name;
     }
-
-    ArrayList<Habitant> habitantList;
-    int maxHabs;
-    ArrayList<Habitant> workerList;
-    int maxWorkers;
-
-    ResourceList productionList;
-
-    ResourceList constructionList;
-
-    ResourceList upKeepList;
-
 
 
     public int getPos_x() {
@@ -96,7 +102,7 @@ public abstract  class Building {
     }
 
 
-    int getNbrFedWorkers()
+    int getNbrFedWorkers() // returns the list of workers that are fed
     {
         int cpt = 0;
         for(Habitant h : getWorkerList())
@@ -108,34 +114,33 @@ public abstract  class Building {
         return cpt;
     }
 
-    char buildingLogo;
-   ResourceList buildingCost;
-
+    //returns the adjusted resource list according to the number of fed workers
     public ResourceList getProductionList() {
         if(maxWorkers == 0)
             return  productionList;
         if(built)
         {
-            return productionList.multipleResourceList((float) getNbrFedWorkers() /maxWorkers);
+            return productionList.multiplyResourceList((float) getNbrFedWorkers() /maxWorkers);
         }
         else
             return new ResourceList(0,0,0,0,0,0,0,0,0,0);
     }
-
-    public boolean checkForMaxWorkers()
-    {
+    //checks to see if the building is full
+    public boolean checkForMaxWorkers() {
         return workerList.size() == maxWorkers;
     }
 
+    //Overrides toString to get a good string t  print to represent the building
     @Override
     public String toString() {
         return getClass() + " at (" + getPos_x() + " " + getPos_y() + ") CWF : " + getWorkerList().size() + " Maxed Out : " + checkForMaxWorkers();
     }
-
-
+    //returns the string containing the building info for the save files
     public String saveBuildingString() {
         return buildingLogo + "\n" + getPos_x() + "\n" + getPos_y() + "\n" + getWorkerList().size() + "\n" + building_delay + "\n" + built;
     }
+
+    //returns a string that represents all the buying info , size , etc
     public String buyingOptions()
     {
         StringBuilder stringBuilder = new StringBuilder();

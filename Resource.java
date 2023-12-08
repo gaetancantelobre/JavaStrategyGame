@@ -2,6 +2,8 @@ public  abstract class Resource {
     int amount;
     String type;
 
+
+    //getters and setters
     public Resource(int amount) {
         this.amount = amount;
     }
