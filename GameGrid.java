@@ -254,8 +254,6 @@ public class GameGrid {
     //placement checking tool verifies if the building if placed at x y would fit on the grid
     private boolean checkForSizeOnGrid(int x , int y ,Building wantedB)
     {
-        System.out.println(x + wantedB.getSize_x()-1);
-        System.out.println(y + wantedB.getSize_y()-1);
         return x + wantedB.getSize_x()-1 <= grid_x && y + wantedB.getSize_y()-1 <= grid_y && x >= 0 && y >= 0;
     }
 
@@ -280,7 +278,7 @@ public class GameGrid {
             {
                 for(int j = 0; j < wantedB.getSize_y();j++)
                 {
-                    if(grid[y+j][x+1] != '¤')
+                    if(grid[y+j][x+i] != '¤')
                     {
                         System.out.println("edges of building overlap");
                         return false;
@@ -295,9 +293,6 @@ public class GameGrid {
     public void updateBuildingDelay(){
         for(Building b : getBuildings())
         {
-            System.out.println(b.building_delay);
-            System.out.println(b.built);
-
             if(b.getBuilding_delay()  > 0 && !b.built)
             {
                 b.setBuilding_delay(b.getBuilding_delay()-1);

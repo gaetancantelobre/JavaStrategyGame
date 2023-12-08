@@ -74,8 +74,6 @@ public class GameController {
                 if(newGame != null)
                 {
                     game.overwriteGame(newGame);
-                    for(Building b : game.getGrid().getBuildings())
-                        System.out.println(b);
                     System.out.println("Game loaded.");
                     collectPayGoNextDay(game);
                     printMenuOptions(game);
@@ -217,6 +215,9 @@ public class GameController {
                             case "Q":
                                 f = new Quarry(Integer.parseInt(myReader.nextLine()),Integer.parseInt(myReader.nextLine()));
                                 break;
+                            case "W":
+                                f = new WheatFarm(Integer.parseInt(myReader.nextLine()),Integer.parseInt(myReader.nextLine()));
+                                break;
                         }
                         // saveProductionBuilding is where all the magic happens
                         if(f != null)
@@ -317,9 +318,9 @@ public class GameController {
                 case "2":
                     game.getGrid().putWorkerInBuilding(game.getUnemployed().get(0), Objects.requireNonNull(chooseBuilding(game,true,true)));break;
                 case "3":
-                    game.getGrid().removeWorkerFromBuilding(chooseBuilding(game,true,true));break;
+                    game.getGrid().removeWorkerFromBuilding(chooseBuilding(game,true,false));break;
                 case "4":
-                    game.getGrid().removeAllWorkersFromBuilding(chooseBuilding(game,true,true));break;
+                    game.getGrid().removeAllWorkersFromBuilding(chooseBuilding(game,true,false));break;
             }
         }else
         {
@@ -337,7 +338,7 @@ public class GameController {
             for(Building b : game.getGrid().getBuildings())
             {
                 String strB = (cpt + " : " + b).replace("class"," ");
-                if(filling && !b.checkForMaxWorkers()) //for population management
+                if(filling && !b.checkForMaxWorkers() && b.isBuilt()) //for population management
                     System.out.println(strB);
                 else if(!filling) { // for stats
                     System.out.println(strB);
@@ -437,6 +438,7 @@ public class GameController {
                 }
                 else {
                     System.out.println("You can not afford this building !");
+                    System.out.println("Building cost :" + wantedB.getBuildingCost().toStringSimple());;
                 }
             }
         }

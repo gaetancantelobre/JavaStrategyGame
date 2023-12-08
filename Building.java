@@ -102,6 +102,10 @@ public abstract  class Building {
     }
 
 
+    public boolean isBuilt() {
+        return built;
+    }
+
     int getNbrFedWorkers() // returns the list of workers that are fed
     {
         int cpt = 0;

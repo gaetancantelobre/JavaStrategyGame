@@ -14,8 +14,8 @@ public class LumberMill extends Building{
         building_delay = 3;
 
 
-        buildingCost = new ResourceList(0,0,20,2,0,6,0,0,0,0);
+        buildingCost = new ResourceList(50,0,0,2,0,6,0,0,0,0);
         productionList = new ResourceList(0,0,30,0,0,0,0,0,0,0);
-        upKeepList = new ResourceList(10,0,4,0,0,0,0,0,0,0);
+        upKeepList = new ResourceList(12,0,0,0,0,0,0,0,0,0);
     }
 }
